@@ -90,7 +90,7 @@ I particularly enjoy working on:
 </p>
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=rect&color=00AEEF,EC008C,FFEB00,00A651&height=2">
+  <em>Photo Editing · Compositing · Vector Design · Branding · Editorial Design · PDF & Print Workflows</em>
 </p>
 
 
@@ -138,8 +138,14 @@ I particularly enjoy working on:
 </p>
 
 <p align="center">
+  <em>Digital Design · Vector Artwork · Cutting · Sign Production · CNC Workflows</em>
+</p>
+
+
+<p align="center">
   <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&height=3&section=header">
 </p>
+
 
 
 ## Creative Workflow
