@@ -1,3 +1,9 @@
+
+
+<img width="1000" height="333" alt="Image" src="https://github.com/user-attachments/assets/f8aeada3-8b69-4678-97c5-b17d534b9e0f" />
+
+
+
 <!-- ===================== HERO ===================== -->
 
 <p align="center">
@@ -163,3 +169,5 @@ PREPRESS
 PRINT
   ↓
 FINAL PRODUCT
+
+
