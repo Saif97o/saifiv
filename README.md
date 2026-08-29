@@ -141,12 +141,13 @@ I particularly enjoy working on:
   <em>Digital Design · Vector Artwork · Cutting · Sign Production · CNC Workflows</em>
 </p>
 
-
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&height=3&section=header">
 </p>
 
-
+<p align="center">
+  <img src="./assets/cmyk-animated-line.gif" width="100%" alt="CMYK Animated Line">
+</p>
 
 ## Creative Workflow
 
