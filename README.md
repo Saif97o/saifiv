@@ -1,2 +1,84 @@
-<img width="1000" height="333" alt="github_uv_printer_LARGE_preview" src="https://github.com/user-attachments/assets/22843631-aea3-433a-9caf-677067206dd5" />
+[github_uv_printer_animation_LARGE.html](https://github.com/user-attachments/files/31596172/github_uv_printer_animation_LARGE.html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GitHub UV Pixel Printer</title>
+<style>
+html,body{margin:0;background:#0b0f14;height:100%;overflow:hidden}
+canvas{display:block;width:100%;height:100%}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById("c"),x=c.getContext("2d");
+const W=1200,H=400,D=Math.min(devicePixelRatio||1,2);
+c.width=W*D;c.height=H*D;x.scale(D,D);
+const C=72,R=10,cw=13,ch=13,g=4,gw=C*(cw+g)-g,x0=(W-gw)/2,y0=76;
+const CMYK=["#00aeea","#ed1bda","#ffd900","#00e676"];
+const printer=new Set();
+for(let i=38;i<56;i++)printer.add(i+",3");
+for(let i=36;i<58;i++)printer.add(i+",4");
+for(let i=35;i<59;i++)printer.add(i+",5");
+for(let i=35;i<59;i++)printer.add(i+",6");
+for(let i=36;i<58;i++)printer.add(i+",7");
+for(let i=38;i<56;i++)printer.add(i+",8");
+for(let i=39;i<55;i++)printer.add(i+",2");
+for(let i=40;i<54;i++)printer.add(i+",1");
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const hex=h=>{let n=parseInt(h.slice(1),16);return[n>>16,(n>>8)&255,n&255]};
+function rgba(h,a){let q=hex(h);return`rgba(${q[0]},${q[1]},${q[2]},${a})`}
 
+function draw(t){
+ x.clearRect(0,0,W,H);x.fillStyle="#0b0f14";x.fillRect(0,0,W,H);
+ for(let yy=0;yy<H;yy+=4){x.fillStyle="#0c1116";x.fillRect(0,yy,W,1)}
+ const cycle=(t%9000)/9000,m=ease(Math.min(cycle/.64,1));
+ const reset=cycle>.82?ease((cycle-.82)/.18):0;
+ const prog=cycle<.82?Math.min(cycle/.72,1):1-reset;
+
+ x.font="600 11px monospace";x.fillStyle="rgba(160,175,185,.7)";
+ x.fillText("UV PIXEL PRINT SYSTEM",24,30);
+ x.fillStyle="rgba(0,230,118,.8)";x.fillText("CMYK / READY",W-125,30);
+
+ for(let r=0;r<R;r++)for(let col=0;col<C;col++){
+   const active=printer.has(col+","+r),dist=Math.hypot(col-47,r-5);
+   let a=.14,color="#65707a";
+   if(active){a=Math.min(1,m*1.25);color="#d7dde2"}
+   if(!active&&m>.1&&m<.92){
+     const attraction=Math.max(0,1-dist/34),wave=Math.sin(dist*1.55-cycle*42);
+     if(wave>.72&&attraction>.08){color=CMYK[(col+r)%4];a=.28+.58*attraction*m}
+   }
+   if(Math.sin(col*1.7+r*2.4+t*.004)>.91&&!active){color=CMYK[(col*3+r)%4];a=Math.max(a,.2)}
+   if(reset&&active)a*=1-reset;
+   const xx=x0+col*(cw+g),yy=y0+r*(ch+g);
+   x.fillStyle=rgba(color,a);x.fillRect(xx,yy,cw,ch);
+ }
+ if(m>.48){
+   const p=ease(Math.min((m-.48)/.52,1));
+   const px=x0+35*(cw+g),py=y0+(ch+g),pw=24*(cw+g)-g,ph=7*(ch+g)-g;
+   x.fillStyle=`rgba(188,197,204,${.75*p})`;x.strokeStyle=`rgba(245,248,250,${p})`;x.lineWidth=2;
+   x.beginPath();x.roundRect(px,py,pw,ph,8);x.fill();x.stroke();
+   x.fillStyle="#11171c";x.strokeStyle="#7d8a94";x.lineWidth=1;
+   x.beginPath();x.roundRect(px+7,py+7, pw-14,23,4);x.fill();x.stroke();
+   CMYK.slice(0,3).forEach((cc,i)=>{x.fillStyle=cc;x.fillRect(px+pw-58+i*14,py+12,8,8)});
+   const trayY=py+ph-32;
+   x.fillStyle="#141b20";x.strokeStyle="#e1e6ea";x.lineWidth=2;
+   x.beginPath();x.roundRect(px+25,trayY,pw-50,24,3);x.fill();x.stroke();
+   if(m>.60){
+     const pp=ease(Math.min((m-.60)/.40,1)),paperX=px+pw*.27,paperY=trayY+12,paperW=pw*.46,paperH=75*pp;
+     x.fillStyle="#f6f8fa";x.strokeStyle="#e1e6ea";x.lineWidth=1;
+     x.fillRect(paperX,paperY,paperW,paperH);x.strokeRect(paperX,paperY,paperW,paperH);
+     CMYK.forEach((cc,i)=>{x.fillStyle=cc;x.fillRect(paperX+15+i*22,paperY+16,18,10)});
+     if(paperH>45){x.fillStyle="#23282d";x.fillRect(paperX+15,paperY+38,paperW-30,7)}
+   }
+ }
+ x.fillStyle="#051e18";x.fillRect(24,358,W-48,7);
+ x.fillStyle="#00d269";x.fillRect(24,358,(W-48)*prog,7);
+ requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
